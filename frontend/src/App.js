@@ -1,10 +1,10 @@
 import style from './App.module.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Navbar from './commponents/navbar/Navbar';
-import Footer from './commponents/footer/Footer';
-import Protected from './commponents/protected/Protected';
-import Home from './pages/home/Home';
-import Login from './pages/login/Login';
+import Navbar from './commponents/Navbar/Navbar';
+import Footer from './commponents/Footer/Footer';
+import Protected from './commponents/Protected/Protected';
+import Home from './pages/Home/Home';
+import Login from './pages/Login/Login';
 
 function App() {
   const isAuth = false ; 

@@ -4,9 +4,8 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     _id: '',
     name: '',
-    mobile: '',
     email: '',
-    auth: ''
+    auth: false
 
 }
 
@@ -16,18 +15,16 @@ export const userSlice = createSlice({
     initialState: initialState,     // initial state of  Slice
     reducers: {
         setUser: (state, action) => {
-            const { _id, name, mobile, email, auth } = action.payload;
+            const { _id, name, email, auth } = action.payload;
             state._id = _id
             state.name = name
             state.email = email
-            state.mobile = mobile
             state.auth = auth
         },
         resetUser: (state, action) => {
             state._id = ''
             state.name = ''
             state.email = ''
-            state.mobile = ''
             state.auth = false
         }
     }

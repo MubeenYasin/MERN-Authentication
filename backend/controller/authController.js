@@ -134,7 +134,7 @@ const authController = {
     });
 
     const userDto = new UserDto(user);
-    res.status(200).json({ User: userDto });
+    res.status(200).json({ User: userDto, auth: true});
   },
 
   //  LOGOUT CONTROLLER
