@@ -33,15 +33,16 @@ const authController = {
       const mobileExist = await User.exists({ mobile });
       const emailExist = await User.exists({ email });
       if (mobileExist) {
-        const error = {
-          status: 409,
-          message: "Mobile number already registered use another number",
-        };
-        return next(error);
+        return res.status(409).json({
+          mobile: true,
+          message: "Mobile No. already registered use another number",
+        });
+        // return next(error);
       }
       if (emailExist) {
         const error = {
           status: 409,
+          email: true,
           message: "Email already registered use another email",
         };
         return next(error);
@@ -100,12 +101,12 @@ const authController = {
       }
       user = await User.findOne({ email }); // all data will be get from User document
       if (!user) {
-        return res.status(404).send("Invalid Email");
+        return res.status(404).json({message: "Email is not registerd"});
       }
       // to compare password from database and userEmail form req.body
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(401).send("Invalid password");
+        return res.status(401).json({message: "Invalid password"})
       }
     } catch (error) {
       return next(error);

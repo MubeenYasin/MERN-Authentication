@@ -5,9 +5,11 @@ import Footer from './commponents/Footer/Footer';
 import Protected from './commponents/Protected/Protected';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
+import { useSelector } from 'react-redux';
+import Signup from './pages/Signup/Signup';
 
 function App() {
-  const isAuth = false ; 
+  const isAuth = useSelector(state => state.user.auth) ; 
   return (
     <div className={style.container}>
       <BrowserRouter>
@@ -60,7 +62,7 @@ function App() {
               exact
               element={
                 <div className={style.main}>
-                  <div>sign-up</div>
+                  <div><Signup /></div>
                 </div>
               }
             />

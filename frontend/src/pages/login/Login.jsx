@@ -22,9 +22,6 @@ function Login() {
     const response = await login(data);
 
     if (response.status === 200) {
-      console.log(`response await login(data)`);
-      console.log(response);
-      console.log(`response await login(data)`);
 
       // 1. setUser
       const user = {
@@ -39,7 +36,7 @@ function Login() {
       navigate("/");
     } else if (response.code === "ERR_BAD_REQUEST") {
       // display error
-      setError(response.response.data.errorMessage);
+      setError(response.response.data.message);
     }
   };
   const { values, touched, handleBlur, handleChange, errors } = useFormik({
@@ -69,9 +66,10 @@ function Login() {
         value={values.password}
         onBlur={handleBlur}
         onChange={handleChange}
-        error={errors.password && touched.password ? 1 : undefined}
+        error={errors.password && touched.password ? true : undefined}
         errormessage={errors.password}
       />
+      {error && <p className={style.errorMsg}>{error}</p>}
       <button className={style.loginBtn} onClick={handleLogin}>
         Login
       </button>
@@ -84,6 +82,7 @@ function Login() {
           Register
         </button>
       </span>
+      
     </div>
   );
 }
