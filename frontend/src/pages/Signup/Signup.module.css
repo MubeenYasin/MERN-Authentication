@@ -1,7 +1,6 @@
 .signupWrapper{
     margin: 0 auto;
     width: 60vw;
-    height: calc(100vh);
     display: flex;
     flex-direction: column;
     align-items: center;

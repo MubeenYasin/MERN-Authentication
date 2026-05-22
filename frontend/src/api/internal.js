@@ -3,8 +3,8 @@ import axios from "axios"
 // basic configration
 
 const api = axios.create({
-    // baseURL: process.env.REACT_APP_INTERNAL_API ,
-    baseURL: "http://localhost:5000" ,
+    // baseURL: "http://localhost:5000" ,
+    baseURL: process.env.REACT_APP_INTERNAL_API ,
     withCredentials: true , // for cookies
     headers:{
         "Content-Type": "application/json"
@@ -20,6 +20,7 @@ export const login = async (data) => {
     }
     return response
 }
+// register Method
 export const signup = async (data) => {
     let response
     try{
@@ -29,6 +30,7 @@ export const signup = async (data) => {
     }
     return response
 }
+// logout Method
 export const signuout = async () => {
     let response
     try{
