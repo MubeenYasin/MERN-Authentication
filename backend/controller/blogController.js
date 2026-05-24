@@ -18,7 +18,7 @@ const blogController = {
             author: Joi.string().regex(mongodbIdPattern).required(),
             content: Joi.string().required(),
             // client side -> base64 encoded strig -> decode -> store -> save photo's path in db
-            photo: Joi.string().required()
+            photo: Joi.string().allow()
         })
         const { error } = createBlogSchema.validate(req.body)
         if (error) {
@@ -28,7 +28,17 @@ const blogController = {
         // / PHOTO HANDLER
         // read as buffer
         // const buffer = Buffer.from(photo.replace(/^data:image\/(png|jpeg|jpg);base64,/, ''), 'base64') ; 
-        const buffer = Buffer.from(photo.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+
+        // const buffer = Buffer.from(photo.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+        let buffer;
+        try {
+            // پہلے چیک کریں کہ کیا تصویر میں بیس64 کا ہیڈر موجود ہے
+            const base64Data = photo.includes(",") ? photo.split(",")[1] : photo;
+            buffer = Buffer.from(base64Data, 'base64');
+        } catch (err) {
+            return next(new Error("تصویر کو بائنری میں تبدیل کرنے میں مسئلہ ہوا ہے۔"));
+        }
+
         // allote a random name
         const imageName = `${Date.now()}-${author}.png`
         // save locally
@@ -139,7 +149,7 @@ const blogController = {
     async delete(req, res, next) {
         // validate id
         const deleteBlogSchema = Joi.object({
-            id : Joi.string().regex(mongodbIdPattern).required()
+            id: Joi.string().regex(mongodbIdPattern).required()
         })
         const { error } = deleteBlogSchema.validate(req.params)
         if (error) {

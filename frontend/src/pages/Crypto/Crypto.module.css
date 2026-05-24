@@ -1,0 +1,42 @@
+.table{
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+
+    
+}
+
+.head{
+    background-color: #f2f2f2;
+    /* border-bottom: 1px solid #f2f2f2; */
+}
+
+.head th{
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+    padding: 10px 0;
+    /* border: 1px solid #f2f2f2; */
+}
+
+.tableRow td{
+    border-bottom: 1px solid #f2f2f2;
+    /* border: 1px solid #f2f2f2; */
+    padding: 5px 30px;
+    font-size: 20px;
+    text-align: left;
+    font-weight: bold;
+}
+.logo{
+    width: 20%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: space-around;
+    /* margin: 0 auto; */
+}
+.symbol{
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+}

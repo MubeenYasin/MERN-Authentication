@@ -1,0 +1,66 @@
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { submitBlog } from "../../api/internal";
+import style from "./SubmitBlog.module.css";
+import TextInput from "../../commponents/TextInput/TextInput";
+import { useNavigate } from "react-router-dom";
+
+function SubmitBlog() {
+  const navigate = useNavigate();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [photo, setPhoto] = useState("");
+  const author = useSelector((state) => state.user._id);
+
+  const getPhoto = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onloadend = () => {
+      setPhoto(reader.result);
+    };
+  };
+
+  const submitHandler = async () => {
+    const data = { author, title, content, photo };
+    const response = await submitBlog(data);
+    if (response.status === 201) {
+      navigate("/");
+    }
+  };
+  return (
+    <div className={style.wrapper}>
+      <div className={style.header}>Create a Blog</div>
+      <TextInput
+        type="text"
+        name="title"
+        placeholder="Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        style={{ width: "60%" }}
+      />
+      <textarea
+        className={style.content}
+        placeholder="Your content goes here...."
+        maxLength={500}
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+      />
+      <div className={style.photoPtompt}>
+        <p>Choose a photo</p>
+        <input
+          type="file"
+          name="photo"
+          id="photo"
+          accept="image/jpg, image/jpeg, image/png"
+          onChange={(e) => getPhoto(e)}
+        />
+      </div>
+      <button className={style.submitBtn} onClick={submitHandler}>
+        Submit
+      </button>
+    </div>
+  );
+}
+export default SubmitBlog;                      

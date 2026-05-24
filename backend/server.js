@@ -7,23 +7,34 @@ import cookieParser from  'cookie-parser'
 import cors from "cors"
 
 
-const corsOption = {
-    credentials: true ,   // for cookies
-    origin: ['http://localhost:3000']
-}
+// const corsOption = {
+//     credentials: true ,   // for cookies
+//     origin: ['http://localhost:3000']
+// }
 
-const expr = express()
+const app = express()
+app.use(cookieParser())
 
-expr.use(cookieParser())
-expr.use(cors(corsOption))
-expr.use(express.json())
-expr.use('/storage', express.static('storage'))
+// app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      return callback(null, true);
+    },
+    optionsSuccessStatus: 200,
+    credentials: true,
+  })
+);
 
-expr.use("/" , router)
+app.use(express.json( { limit: "50mb" } ))
+
+app.use('/storage', express.static('storage'))
+
+app.use("/" , router)
 
 dbConnect()
-expr.use(errorHandler)
 
+app.use(errorHandler)
 
-expr.listen(config.PORT, () => console.log(`Server is running on http:/localhost:${config.PORT}`))
-expr.get('/', (req, res) => res.send(`Welcome Mubben `) )
+app.listen(config.PORT, () => console.log(`Server is running on http://localhost:${config.PORT}`))
+app.get('/', (req, res) => res.send(`Welcome Mubben `) )
